@@ -5,12 +5,115 @@
 * 05111840000091 Vincentius Tanubrata
 
 #### 1. Kalian diminta untuk membuat sebuah website utama dengan alamat **http://semeruyyy.pw**
+* install bind9 dengan
+```
+apt-get update
+apt-get install bind9 -y
+```
+* buatlah domain semerub07.pw pada UML MALANG dengan
+```
+nano /etc/bind/named.conf.local
+```
+* lalu buatlah zone semerub07.pw dengan syntax sebagai berikut
+![Isi /etc/bind/named.conf.local](images/dns_2.jpg)
+* buat folder jarkom pada /etc/bind lalu copy file db.local ke path /etc/bind/jarkom/ dan ubah namanya menjadi semerub07.pw
+```
+mkdir /etc/bind/jarkom
+cp /etc/bind/db.local /etc/bind/jarkom/semerub07.pw
+```
+* buka file /etc/bind/jarkom/semerub07.pw dan ubah syntaxnya menjadi berikut
+![Isi /etc/bind/jarkom/semerub07.pw](images/dns_3.jpg)
+* restart bind9 dengan melakukan `service bind9 restart`
+* Kemudian setting pada client GRESIK dan SIDOARJO untuk mengarahkan nameserver menuju IP MALANG dengan membuka `/etc/resolv.conf` dan setting menjadi seperti berikut 
+![Isi_/etc/resolv.conf_diGresik](images/dns_4.jpg)
+* Terakhir, untuk melakukan test, lakukan `ping semerub07.pw` dari client GRESIK atau SIDOARJO
+![hasil_ping_semerub07.pw](images/dns_5.jpg)
+
 #### 2. yang memiliki alias **http://www.semeruyyy.pw**
+* untuk menambahkan alias, kita perlu menambahkan CNAME pada file `/etc/bind/jarkom/semerub07.pw` seperti berikut
+![cname_di_malang](images/dns_6.jpg)
+* kemudian kita restart bind dengan `service bind9 restart` 
+* untuk test, kita bisa melakukan `ping www.semerub07.pw` pada client GRESIK
+![hasilPingCNAME](images/dns_7.jpg)
+
 #### 3. dan subdomain **http://penanjakan.semeruyyy.pw** yang diatur DNS-nya pada **MALANG** dan mengarah ke IP Server **PROBOLINGGO**
+* untuk subdomain, pertama kita tambahkan konfigurasi pada file `/etc/bind/jarkom/semerub07.pw` dengan menambahkan subdomain penanjakan dan kita arahkan ke IP server PROBOLINGGO
+![subdomain_pada_/etc/bind/jarkom/semerub07.pw](images/dns_8.jpg)
+* lalu kita restart bind dengan `service bind9 restart` 
+* untuk test, kita bisa melakukan `ping penanjakan.semerub07.pw` pada client GRESIK
+![hasil_subdomain_penanjakan](images/dns_9.jpg)
+
 #### 4. serta dibuatkan reverse domain untuk domain utama.
+* untuk reverse domain, pertama kita buka file dibawah ini pada uml MALANG
+```
+nano /etc/bind/named.conf.local
+```
+* lalu kita tambahkan konfigurasi seperti berikut
+![reverse_domain_malang](images/dns_10.jpg)
+
+* lalu kita copy file db.local kedalam folder jarkom dan diubah namanya menjadi
+```
+cp /etc/bind/db.local /etc/bind/jarkom/83.151.10.in-addr.arpa
+```
+* lalu kita ubah isi dari file `83.151.10.in-addr.arpa` tersebut dengan menambahkan PTR yang mengarah ke ip MALANG
+![isi_83.151.10.in-addr.arpa](images/dns_11.jpg)
+* restart bind dengan `service bind9 restart`
+* untuk mengecek, pada client GRESIK install dnsutils
+```
+apt-get update
+apt-get install dnsutils
+```
+* lalu kembalikan name server agar tersambung ke IP MALANG
+```
+host -t PTR 10.151.83.66
+```
+![hasil_host-t_ipmalang](images/dns_12.jpg)
+
 #### 5. Untuk mengantisipasi server dicuri/rusak, Bibah minta dibuatkan DNS Server Slave pada **MOJOKERTO** agar Bibah tidak terganggu menikmati keindahan Semeru pada Website.
+* untuk dns slave, pertama kita buka `/etc/bind/named.conf.local` dan atur syntaxnya menjadi berikut
+![/etc/bind/named.conf.local_untukdnsSlave](images/dns_13.jpg)
+* lakukan restart bind dengan `service bind9 restart`
+* buka uml MOJOKERTO lalu install bind9 dengan
+```
+apt-get update
+apt-get install bind9 -y
+```
+kemudian buka `/etc/bind/named.conf.local` pada MOJOKERTO dan atur menjadi berikut
+![/etc/bind/named.conf.local_dimojokerto](images/dns_13.jpg)
+* lakukan restart bind dengan `service bind9 restart`
+* untuk testing, stop bind9 pada malang dengan `service bind9 stop`
+* lalu pada client GRESIK arahkan nameserver ke IP MALANG dan IP MOJOKERTO
+* dan untuk testing, lakukan ping semerub07 pada client GRESIK
+![hasil_ping_utkDNSslave](images/dns_14.jpg)
+
 #### 6. Selain website utama Bibah juga meminta dibuatkan subdomain dengan alamat **http://gunung.semeruyyy.pw** yang didelegasikan pada server **MOJOKERTO** dan mengarah ke IP Server **PROBOLINGGO**.
+* untuk delegasi subdomain 'gunung.semerub07.pw' , pertama buka file `/etc/bind/jarkom/semerub07.pw` pada MALANG dan tambahkan seperti berikut
+![isi_/etc/bind/jarkom/semerub07.pw](images/dns_15.jpg)
+* edit file `/etc/bind/named.conf.options` dan comment `dnssec-validation auto;` serta tambahkan `allow-query{any;};`
+* lalu ubah syntax pada `/etc/bind/named.conf.local` di MALANG menjadi berikut
+![isi_/etc/bind/named.conf.local](images/dns_16.jpg)
+* restart bind9 dengan `service bind9 restart`
+* pada MOJOKERTO buka file `/etc/bind/named.conf.options` dan comment `dnssec-validation auto;` serta tambahkan `allow-query{any;};`
+* lalu edit `/etc/bind/named.conf.local` menjadi seperti berikut
+![isi_/etc/bind/named.conf.local_padaMOJOKERTO](images/dns_17.jpg)
+* kemudian buat file bernama delegasi dan copy db.local ke file delegasi tersebut dan ganti namanya menjadi
+```
+mkdir /etc/bind/delegasi
+cp /etc/bind/db.local /etc/bind/delegasi/gunung.semerub07.pw
+```
+* kemudian edit file `gunung.semerub07.pw` menjadi berikut
+![isi_gunung.semerub07.pw](images/dns_18.jpg)
+lakukan restart bind9 dengan `service bind9 restart`
+* untuk testing lakukan `ping gunung.semerub07.pw`
+![hasil_ping_gunung.semerub07.pw](images/dns_19.jpg)
+
 #### 7. Bibah juga ingin memberi petunjuk mendaki gunung semeru kepada anggota komunitas sehingga dia meminta dibuatkan subdomain dengan nama **http://naik.gunung.semeruyyy.pw**, domain ini diarahkan ke IP Server **PROBOLINGGO**. 
+* untuk pembuatan subdomain `naik.gunung.semerub07.pw` langkah awalnya mirip pada nomor 6.
+* Namun pada file `gunung.semerub07.pw` di MOJOKERTO, tambahkan 1 subdomain lagi yaitu naik yang mengarah ke IP PROBOLINGGO
+![hasil_ping_gunung.semerub07.pw](images/dns_18.jpg)
+* lalu test pada client GRESIK dengan melakukan `ping naik.gunung.semerub07.pw`
+![hasil_ping_gunung.semerub07.pw](images/dns_19.jpg)
+
 #### 8. Setelah selesai membuat keseluruhan domain, kamu diminta untuk segera mengatur web server. Domain **http://semeruyyy.pw** memiliki _DocumentRoot_ pada **/var/www/semeruyyy.pw**
 * Pada UML PROBOLINGGO menginstall apache2 dan php5 dengan command :
 ```
