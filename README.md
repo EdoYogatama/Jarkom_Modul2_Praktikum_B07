@@ -104,7 +104,27 @@ a2ensite penanjakan.semerub07.pw
 service apache2 restart
 ```
 #### 14. Untuk web **http://gunung.semeruyyy.pw** belum dapat dikonfigurasi pada web server karena menunggu pengerjaan website selesai. sedangkan web **http://naik.gunung.semeruyyy.pw** sudah bisa diakses hanya dengan menggunakan port **8888**. DocumentRoot web berada pada **/var/www/naik.gunung.semeruyyy.pw**.
-
-#### 15. Dikarenakan web **http://naik.gunung.semeruyyy.pw** bersifat private Bibah meminta kamu membuat web **http://naik.gunung.semeruyyy.pw** agar diberi autentikasi password dengan username **“semeru”** dan password **“kuynaikgunung”** supaya aman dan tidak sembarang orang bisa mengaksesnya. 
+* Membuka folder **/etc/apache2/sites-available/**
+* Mengcopy file **default** menjadi **naik.gunung.semerub07.pw**
+* Buka file **naik.gunung.semerub07.pw** dan mengganti port pada _VirtualHost_ dan juga mengedit _DocumentRoot_ nya seperti berikut
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/141.jpg)
+* Kembali pada direktori **/etc/apache2/** dan membuka file **ports.conf**, tambahkan script untuk menerima port 8888
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/141.jpg)
+* Move folder dari hasil ekstrak ke **/var/www** dengan nama naik.gunung.semerub07.pw
+* Jalankan command sebgai berikut untuk enable konfigurasi website
+```
+a2ensite penanjakan.semerub07.pw
+service apache2 restart
+```
+#### 15. Dikarenakan web **http://naik.gunung.semeruyyy.pw** bersifat private Bibah meminta kamu membuat web **http://naik.gunung.semeruyyy.pw** agar diberi autentikasi password dengan username **“semeru”** dan password **“kuynaikgunung”** supaya aman dan tidak sembarang orang bisa mengaksesnya.
+* Pindah direktori ke **/var/www/naik.gunung.semeru.pw** Dan tambahkan file **.htaccess** di dalam direktori tersebut. Mengisi nya dengan script sebagai berikut
+```
+cd /var/www/naik.gunung.semerub07.pw
+nano .htaccess
+```
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/151.jpg)
+* Edit file konfigurasi pada **/etc/apache2/sites-available/naik.gunung.semeru.pw** dengan menambahkan script berikut
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/151.jpg)
 #### 16. Saat Bibah mengunjungi **IP PROBOLINGGO**, yang muncul bukan web utama **http://semeruyyy.pw** melainkan laman default Apache yang bertuliskan “It works!”. Karena dirasa kurang profesional, maka setiap Bibah mengunjungi IP PROBOLINGGO akan dialihkan secara otomatis ke **http://semeruyyy.pw**. 
+
 #### 17. Karena pengunjung pada **/var/www/penanjakan.semeruyyy.pw/public/images** sangat banyak maka semua request gambar yang memiliki substring **“semeru”** akan diarahkan menuju **semeru.jpg**
