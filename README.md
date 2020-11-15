@@ -128,31 +128,37 @@ cd /etc/apache2/sites-available
 cp default semerub07.pw
 nano semerub07.pw
 ```
-![Isi /etc/apache2/sites-available/semerub07.pw](images/8.jpg)
+![Isi /etc/apache2/sites-available/semerub07.pw](images/ws_81.png)
 * Pindah direktori ke **/var/www/**, setelah itu move folder yang sudah diekstrak dari hasil download direktori tersebut, dan memberi nama folder **semerub07.pw**
+
+![Isi /var/www/semerub07.pw](images/ws_82.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite semerub07.pw
 service apache2 restart
 ```
+* Akses semerub07.pw pada browser masing masing
+
+![testing](images/test_ws_1.png)
 #### 9. Awalnya web dapat diakses menggunakan alamat **http://semeruyyy.pw/index.php/home**. Karena dirasa alamat urlnya kurang bagus, maka diaktifkan mod rewrite agar urlnya menjadi **http://semeruyyy.pw/home**.
 * Membuka folder **/var/www/semerub07.pw** lalu membuat file **.htaccess** dan berisikan sebagai berikut
 ```
 cd /var/www/semerub07.pw
 nano .htaccess
 ``` 
-![Isi /var/www/semerub07.pw/.htaccess](images/91.jpg)
+![Isi /var/www/semerub07.pw/.htaccess](images/ws_91.png)
 * Setelah itu membuka file konfigurasi di **/etc/apache2/sites-available/semerub07.pw** dan menambahkan script berikut
 ```
 cd /etc/apache2/sites-available
 nano semerub07.pw
 ```
-![/etc/apache2/sites-available/semerub07.pw](images/92.jpg)
+![/etc/apache2/sites-available/semerub07.pw](images/ws_92.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite semerub07.pw
 service apache2 restart
 ```
+![testing](images/test_ws_2.png)
 #### 10. Web **http://penanjakan.semeruyyy.pw** akan digunakan untuk menyimpan assets file yang memiliki _DocumentRoot_ pada **/var/www/penanjakan.semeruyyy.pw** dan memiliki struktur folder sebagai berikut: 
 ```
 /var/www/penanjakan.semeruyyy.pw 
@@ -168,65 +174,84 @@ cd /etc/apache2/sites-available
 cp default penanjakan.semerub07.pw
 nano penanjakan.semerub07.pw
 ``` 
-![Isi /etc/apache2/sites-available/penanjakan.semerub07.pw](images/10.jpg)
+![Isi /etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_101.png)
 * Pindah direktori ke **/var/www/**, setelah itu move folder yang sudah diekstrak dari hasil download direktori tersebut, dan memberi nama folder **penanjakan.semerub07.pw**
+
+![Isi /var/www/penanjakan.semerub07.pw](images/ws_102.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite penanjakan.semerub07.pw
 service apache2 restart
 ```
+![testing](images/test_ws_3.png)
 #### 11. Pada folder */public* dibolehkan directory listing namun untuk folder yang berada di dalamnya tidak dibolehkan. 
 * Menambahkan konfigurasi pada file **/etc/apache2/sites-available/penanjakan.semerub07.pw** untuk indexing directory seperti berikut
-![Isi /etc/apache2/sites-available/penanjakan.semerub07.pw](images/10.jpg)
+
+![Isi /etc/apache2/sites-available/penanjakan.semerub07.pw](images/11.jpg)
+![testing](images/test_ws_4.png)
 #### 12. Untuk mengatasi HTTP Error code 404, disediakan file 404.html pada folder **/errors** untuk mengganti error default 404 dari Apache
 * Membuka folder **/var/www/penanjakan.semerub07.pw** lalu membuat file **.htaccess** dan berisikan sebagai berikut
 ```
 cd /var/www/penanjakan.semerub07.pw
 nano .htaccess
 ``` 
-![Isi /var/www/penanjakan.semerub07.pw/.htaccess](images/121.jpg)
+![Isi /var/www/penanjakan.semerub07.pw/.htaccess](images/ws_121.png)
 * Setelah itu membuka file konfigurasi di **/etc/apache2/sites-available/penanjakan.semerub07.pw** dan menambahkan script berikut
 ```
 cd /etc/apache2/sites-available
 nano penanjakan.semerub07.pw
 ```
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/122.jpg)
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_122.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite penanjakan.semerub07.pw
 service apache2 restart
 ```
+![testing](images/test_ws_5.png)
 #### 13. Untuk mengakses file assets javascript awalnya harus menggunakan url **http://penanjakan.semeruyyy.pw/public/javascripts**. Karena terlalu panjang maka dibuatkan konfigurasi virtual host agar ketika mengakses file assets menjadi **http://penanjakan.semeruyyy.pw/js**. 
 * Membuka file konfigurasi pada **/etc/apache2/sites-available/penanjakan.semerub07.pw**
 * Menambahkan _Alias_ pada script konfigurasi sebagai berikut
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/131.jpg)
+
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_13.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite penanjakan.semerub07.pw
 service apache2 restart
 ```
+![testing](images/test_ws_6.png)
 #### 14. Untuk web **http://gunung.semeruyyy.pw** belum dapat dikonfigurasi pada web server karena menunggu pengerjaan website selesai. sedangkan web **http://naik.gunung.semeruyyy.pw** sudah bisa diakses hanya dengan menggunakan port **8888**. DocumentRoot web berada pada **/var/www/naik.gunung.semeruyyy.pw**.
 * Membuka folder **/etc/apache2/sites-available/**
 * Mengcopy file **default** menjadi **naik.gunung.semerub07.pw**
 * Buka file **naik.gunung.semerub07.pw** dan mengganti port pada _VirtualHost_ dan juga mengedit _DocumentRoot_ nya seperti berikut
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/141.jpg)
+
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_141.png)
 * Kembali pada direktori **/etc/apache2/** dan membuka file **ports.conf**, tambahkan script untuk menerima port 8888
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/141.jpg)
+
+![/etc/apache2/ports.conf](images/ws_142.png)
 * Move folder dari hasil ekstrak ke **/var/www** dengan nama naik.gunung.semerub07.pw
+
+![/var/www/naik.gunung.semerub07.pw](images/ws_143.png)
 * Jalankan command sebgai berikut untuk enable konfigurasi website
 ```
 a2ensite penanjakan.semerub07.pw
 service apache2 restart
 ```
+![testing](images/test_ws_8.png)
 #### 15. Dikarenakan web **http://naik.gunung.semeruyyy.pw** bersifat private Bibah meminta kamu membuat web **http://naik.gunung.semeruyyy.pw** agar diberi autentikasi password dengan username **“semeru”** dan password **“kuynaikgunung”** supaya aman dan tidak sembarang orang bisa mengaksesnya.
 * Pindah direktori ke **/var/www/naik.gunung.semeru.pw** Dan tambahkan file **.htaccess** di dalam direktori tersebut. Mengisi nya dengan script sebagai berikut
 ```
 cd /var/www/naik.gunung.semerub07.pw
 nano .htaccess
 ```
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/151.jpg)
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_151.png)
 * Edit file konfigurasi pada **/etc/apache2/sites-available/naik.gunung.semeru.pw** dengan menambahkan script berikut
-![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/151.jpg)
-#### 16. Saat Bibah mengunjungi **IP PROBOLINGGO**, yang muncul bukan web utama **http://semeruyyy.pw** melainkan laman default Apache yang bertuliskan “It works!”. Karena dirasa kurang profesional, maka setiap Bibah mengunjungi IP PROBOLINGGO akan dialihkan secara otomatis ke **http://semeruyyy.pw**. 
 
+![/etc/apache2/sites-available/penanjakan.semerub07.pw](images/ws_152.png)
+![testing](images/test_ws_7.png)
+#### 16. Saat Bibah mengunjungi **IP PROBOLINGGO**, yang muncul bukan web utama **http://semeruyyy.pw** melainkan laman default Apache yang bertuliskan “It works!”. Karena dirasa kurang profesional, maka setiap Bibah mengunjungi IP PROBOLINGGO akan dialihkan secara otomatis ke **http://semeruyyy.pw**. 
+* Membuka **/etc/apache2/sites-available/** dan mengedit file **default**
+
+![//etc/apache2/sites-available/default](images/ws_16.png)
+![testing](images/test_ws_9.png)
+![testing](images/test_ws_101.png)
 #### 17. Karena pengunjung pada **/var/www/penanjakan.semeruyyy.pw/public/images** sangat banyak maka semua request gambar yang memiliki substring **“semeru”** akan diarahkan menuju **semeru.jpg**
