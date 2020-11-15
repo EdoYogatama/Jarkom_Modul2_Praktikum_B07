@@ -255,3 +255,10 @@ nano .htaccess
 ![testing](images/test_ws_9.png)
 ![testing](images/test_ws_101.png)
 #### 17. Karena pengunjung pada **/var/www/penanjakan.semeruyyy.pw/public/images** sangat banyak maka semua request gambar yang memiliki substring **“semeru”** akan diarahkan menuju **semeru.jpg**
+* Membuka folder website di **/var/www/penanjakan.semerub07.pw**
+* Menambahkan script pada **.htaccess**
+
+![/var/www/penanjakan.semerub07.pw/.htaccess](images/ws_17.png)
+![testing](images/test_ws_11.png)
+
+![testing](images/test_ws_12.png)
